@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サウナグッズショップ | サウナデツナガル</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <div class="container">
+            <h1>サウナグッズショップ</h1>
+            <p>「ととのい」をより快適にするオリジナルグッズを販売中！</p>
+
+            <div class="shop-grid">
+                <!-- 商品1 -->
+                <div class="product-card">
+                    <img src="https://placehold.jp/300x300.png?text=Sauna%20Hat" alt="サウナハット" class="product-image">
+                    <div class="card-content">
+                        <h3>オリジナルサウナハット</h3>
+                        <p class="product-price">¥3,800</p>
+                        <p style="font-size: 0.9rem; color: #666;">断熱性抜群のウール素材。髪のダメージを防ぎます。</p>
+                        <button class="btn btn-primary" onclick="addToCart('オリジナルサウナハット', 3800, 'https://placehold.jp/300x300.png?text=Sauna%20Hat')">カートに入れる</button>
+                    </div>
+                </div>
+
+                <!-- 商品2 -->
+                <div class="product-card">
+                    <img src="https://placehold.jp/300x300.png?text=MOKU%20Towel" alt="MOKUタオル" class="product-image">
+                    <div class="card-content">
+                        <h3>サウナ専用MOKUタオル</h3>
+                        <p class="product-price">¥1,200</p>
+                        <p style="font-size: 0.9rem; color: #666;">速乾・軽量・コンパクト。サウナーの必需品。</p>
+                        <button class="btn btn-primary" onclick="addToCart('サウナ専用MOKUタオル', 1200, 'https://placehold.jp/300x300.png?text=MOKU%20Towel')">カートに入れる</button>
+                    </div>
+                </div>
+
+                <!-- 商品3 -->
+                <div class="product-card">
+                    <img src="https://placehold.jp/300x300.png?text=Sauna%20Mat" alt="サウナマット" class="product-image">
+                    <div class="card-content">
+                        <h3>折りたたみサウナマット</h3>
+                        <p class="product-price">¥980</p>
+                        <p style="font-size: 0.9rem; color: #666;">マイマットで衛生的。持ち運びに便利な折りたたみ式。</p>
+                        <button class="btn btn-primary" onclick="addToCart('折りたたみサウナマット', 980, 'https://placehold.jp/300x300.png?text=Sauna%20Mat')">カートに入れる</button>
+                    </div>
+                </div>
+
+                <!-- 商品4 -->
+                <div class="product-card">
+                    <img src="https://placehold.jp/300x300.png?text=Poncho" alt="サウナポンチョ" class="product-image">
+                    <div class="card-content">
+                        <h3>外気浴ポンチョ</h3>
+                        <p class="product-price">¥5,500</p>
+                        <p style="font-size: 0.9rem; color: #666;">冬の外気浴も寒くない。肌触りの良いタオル生地。</p>
+                        <button class="btn btn-primary" onclick="addToCart('外気浴ポンチョ', 5500, 'https://placehold.jp/300x300.png?text=Poncho')">カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+    <script src="common.js"></script>
+    <script>
+        function addToCart(name, price, image) {
+            const product = {
+                id: 'prod-' + Date.now(),
+                name: name,
+                price: price,
+                image: image,
+                color: 'ワンカラー',
+                quantity: 1
+            };
+            
+            // LocalStorageを使用
+            let cart = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+            cart.push(product);
+            localStorage.setItem('tokyoSaunaCart', JSON.stringify(cart));
+            if (window.updateCartBadge) window.updateCartBadge();
+        
+            if(confirm(name + ' をカートに追加しました。\nカートを見ますか？')) {
+                window.location.href = 'cart.html';
+            }
+        }
+    </script>
+</body>
+</html>

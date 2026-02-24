@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ログイン｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <div class="container">
+      <h1>ログイン</h1>
+      <div class="contact-form" style="max-width: 500px; margin: 0 auto;">
+        <form onsubmit="loginUser(event)">
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" required placeholder="example@tokyosauna.com">
+          </div>
+          <div class="form-group">
+            <label for="password">パスワード</label>
+            <input type="password" id="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;" id="login-btn">ログインして進む</button>
+        </form>
+        <div class="login-links" style="text-align: center; margin-top: 15px;">
+          <p><a href="#">パスワードをお忘れの方</a></p>
+          <p style="margin-top: 0.5rem;">初めての方は <a href="register.html">新規会員登録</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="common.js"></script>
+
+  <script>
+    function loginUser(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (!window.auth) {
+        alert('システム読み込み中です。少々お待ちください。');
+        return;
+      }
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          alert('ログインしました。');
+          window.location.href = 'mypage.html'; // または直前のページ
+        })
+        .catch((error) => {
+          alert('ログインに失敗しました: ' + error.message);
+        });
+    }
+  </script>
+</body>
+</html>

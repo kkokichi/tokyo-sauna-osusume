@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サウナ予約 | サウナデツナガル</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <div class="container">
+            <h1>サウナ施設予約</h1>
+            <p style="text-align: center; margin-bottom: 30px;">提携サウナ施設の優先予約が可能です。</p>
+            
+            <div class="contact-form">
+                <form id="reservationForm">
+                    <div class="form-group">
+                        <label for="facility">施設を選択</label>
+                        <select id="facility" name="facility" required>
+                            <option value="">選択してください</option>
+                            <option value="karumaru">かるまる池袋</option>
+                            <option value="saunacenter">サウナセンター</option>
+                            <option value="hokuo">サウナ＆カプセルホテル 北欧</option>
+                            <option value="laqua">スパ ラクーア</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">予約日</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">来店時間</label>
+                        <input type="time" id="time" name="time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="people">人数</label>
+                        <input type="number" id="people" name="people" min="1" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">お名前</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">予約を確定する</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+    <script src="common.js"></script>
+    <script>
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('予約を受け付けました！\n確認メールをお送りします。');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

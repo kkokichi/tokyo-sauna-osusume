@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="top.html">東京サウナ</a></h1>
+      <nav>
+        <ul>
+          <li><a href="top.html#concept">コンセプト</a></li>
+          <li><a href="store.html">グッズ</a></li>
+          <li><a href="reserve.html">サウナ予約</a></li>
+          <li id="auth-link"></li>
+          <li><a href="cart.html" aria-label="カート" class="nav-cart-wrap"><i class="fas fa-shopping-cart"></i><span id="cart-badge" class="cart-badge"></span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h2>My Page</h2>
+  </div>
+
+  <section class="container">
+    <div class="admin-tabs">
+      <button onclick="switchTab('orders')" class="btn-tab active" id="tab-orders">注文履歴</button>
+      <button onclick="switchTab('reservations')" class="btn-tab" id="tab-reservations">サウナ予約履歴</button>
+    </div>
+
+    <!-- 注文履歴 -->
+    <div id="orders-section" class="tab-content block-active">
+      <div class="product-list">
+        <h3 style="text-align: center; margin-bottom: 2rem;">オンラインストア 注文履歴</h3>
+        <div id="order-history-list"></div>
+      </div>
+    </div>
+
+    <!-- 予約履歴 -->
+    <div id="reservations-section" class="tab-content">
+      <div class="product-list">
+        <h3 style="text-align: center; margin-bottom: 2rem;">サウナ 予約履歴</h3>
+        <div id="reservation-history-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-sns">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+    </div>
+    <p>© TOKYO SAUNA</p>
+  </footer>
+
+  <script>
+    let currentUser = null;
+
+    document.addEventListener('firebase-ready', (e) => {
+      const user = e.detail.user;
+      if (!user) {
+         alert('ログインが必要です。');
+         window.location.href = 'login.html';
+         return;
+      }
+      currentUser = user;
+
+      // ヘッダー更新
+      const authLink = document.getElementById('auth-link');
+      authLink.innerHTML = `<a href="mypage.html" style="color:#d97706;">マイページ</a>`;
+
+      const cart = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      const badge = document.getElementById('cart-badge');
+      if (totalItems > 0) {
+        badge.textContent = totalItems;
+        badge.style.display = 'flex';
+      }
+
+      // 履歴表示
+      renderOrderHistory();
+      renderReservationHistory();
+    });
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.btn-tab').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('block-active'));
+      document.getElementById(tabName + '-section').classList.add('block-active');
+    }
+
+    function renderOrderHistory() {
+      const container = document.getElementById('order-history-list');
+      
+      const allOrders = JSON.parse(localStorage.getItem('tokyoSaunaOrders')) || [];
+      const userOrders = allOrders.filter(order => order.userId === currentUser.uid);
+
+      if (userOrders.length === 0) {
+        container.innerHTML = '<p style="text-align:center;">注文履歴はありません。</p>';
+        return;
+      }
+
+      let html = '';
+      userOrders.reverse().forEach(order => {
+        const date = new Date(order.orderDate).toLocaleString('ja-JP');
+        html += `
+          <div class="order-summary-box" style="margin-bottom: 2rem; text-align:left;">
+            <div class="summary-line">
+              <strong>注文日: ${date}</strong>
+              <span>合計: ¥${order.finalTotal.toLocaleString()}</span>
+            </div>
+            <ul style="list-style:none; padding:1rem 0; font-size:0.9rem;">`;
+        order.items.forEach(item => {
+          html += `<li>- ${item.name} (${item.color}) x ${item.quantity}</li>`;
+        });
+        html += `</ul></div>`;
+      });
+      container.innerHTML = html;
+    }
+
+    function renderReservationHistory() {
+      const container = document.getElementById('reservation-history-list');
+      
+      db.collection('reservations').where('userId', '==', currentUser.uid).orderBy('createdAt', 'desc').get()
+        .then(snapshot => {
+          if (snapshot.empty) {
+            container.innerHTML = '<p style="text-align:center;">サウナの予約履歴はありません。</p>';
+            return;
+          }
+
+          let html = '';
+          snapshot.forEach(doc => {
+            const res = doc.data();
+            html += `
+              <div class="order-summary-box" style="margin-bottom: 2rem; text-align:left;">
+                <div class="summary-line">
+                  <strong>予約日: ${res.reservationDate}</strong>
+                  <span>時間: ${res.reservationTime}</span>
+                </div>
+                <p style="padding-top:0.5rem;">プラン: ${res.plan}</p>
+              </div>
+            `;
+          });
+          container.innerHTML = html;
+        });
+    }
+  </script>
+</body>
+</html>

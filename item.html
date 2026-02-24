@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Original Sauna Hat｜オンラインストア｜東京サウナ</title>
+  <meta name="description" content="東京サウナオリジナルサウナハットの詳細ページ。">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header>
+    <div class="container">
+      <h1><a href="top.html">東京サウナ</a></h1>
+      <nav>
+        <ul>
+          <li><a href="top.html#concept">コンセプト</a></li>
+          <li><a href="top.html#facility">施設紹介</a></li>
+          <li><a href="top.html#price">料金</a></li>
+          <li><a href="store.html" style="color:#d97706;">グッズ</a></li>
+          <li><a href="top.html#access">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+          <li><a href="admin.html">管理</a></li>
+          <li><a href="cart.html" aria-label="カート"><i class="fas fa-shopping-cart"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- パンくずリスト -->
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="top.html">TOP</a><span>/</span><a href="store.html">Online Store</a><span>/</span><span id="breadcrumb-name">Loading...</span>
+    </div>
+  </div>
+
+  <!-- 商品詳細 -->
+  <section class="product-detail">
+    <div class="container product-container">
+      <!-- 画像エリア -->
+      <div class="product-gallery">
+        <div class="main-image">
+          <img src="" alt="" id="mainImg" onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'>No Image</div>'">
+        </div>
+        <!-- サムネイル機能は簡易化のため削除（管理画面で複数画像登録に対応していないため） -->
+      </div>
+
+      <!-- 情報エリア -->
+      <div class="product-info">
+        <h2 id="product-name">Loading...</h2>
+        <p class="product-price">¥<span id="product-price">0</span> <span style="font-size:0.9rem; color:#666; font-weight:400;">(税込)</span></p>
+        
+        <div class="product-desc" id="product-desc">
+          <!-- JSで挿入 -->
+        </div>
+
+        <form class="product-form" onsubmit="addToCart(event)">
+          <div class="form-row">
+            <label>カラー</label>
+            <div class="select-box">
+              <select name="color" id="product-color">
+                <!-- JSで挿入 -->
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>数量</label>
+            <div class="select-box">
+              <select name="quantity" id="product-quantity">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-add-cart">カートに入れる</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 関連商品 -->
+  <section class="related-products">
+    <div class="container">
+      <h3>Related Items</h3>
+      <div class="goods-grid">
+        <div class="goods-item">
+          <a href="#">
+            <div class="goods-image">
+              <img src="https://images.unsplash.com/photo-1528821128474-27f963b062bf?w=500&h=500&fit=crop" alt="タオルセット" onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'>MOKUタオル</div>'">
+            </div>
+            <h4>MOKU Towel Set</h4>
+            <p class="price">¥2,200</p>
+          </a>
+        </div>
+        <div class="goods-item">
+          <a href="#">
+            <div class="goods-image">
+              <img src="https://images.unsplash.com/photo-1595348020949-87cdfbb44174?w=500&h=500&fit=crop" alt="Tシャツ" onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'>ロゴTシャツ</div>'">
+            </div>
+            <h4>Logo T-Shirt</h4>
+            <p class="price">¥3,800</p>
+          </a>
+        </div>
+        <div class="goods-item">
+          <a href="#">
+            <div class="goods-image">
+              <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=500&h=500&fit=crop" alt="ステッカー" onerror="this.parentElement.innerHTML='<div class=\'image-placeholder\'>ステッカー</div>'">
+            </div>
+            <h4>Original Sticker</h4>
+            <p class="price">¥500</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer>
+    <div class="footer-sns">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    </div>
+    <p>© TOKYO SAUNA</p>
+  </footer>
+
+  <script>
+    // 現在の商品データを保持
+    let currentProduct = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      
+      if (!productId) {
+        alert('商品が見つかりません');
+        window.location.href = 'store.html';
+        return;
+      }
+
+      const products = JSON.parse(localStorage.getItem('tokyoSaunaProducts')) || [];
+      currentProduct = products.find(p => p.id === productId);
+
+      if (!currentProduct) {
+        alert('商品が見つかりません');
+        window.location.href = 'store.html';
+        return;
+      }
+
+      // 画面描画
+      document.title = `${currentProduct.name}｜オンラインストア｜東京サウナ`;
+      document.getElementById('breadcrumb-name').textContent = currentProduct.name;
+      document.getElementById('product-name').textContent = currentProduct.name;
+      document.getElementById('product-price').textContent = currentProduct.price.toLocaleString();
+      document.getElementById('product-desc').innerHTML = currentProduct.description.replace(/\n/g, '<br>');
+      document.getElementById('mainImg').src = currentProduct.image;
+      document.getElementById('mainImg').alt = currentProduct.name;
+
+      // カラー選択肢の生成
+      const colorSelect = document.getElementById('product-color');
+      colorSelect.innerHTML = '';
+      if (currentProduct.colors && currentProduct.colors.length > 0) {
+        currentProduct.colors.forEach(color => {
+          const option = document.createElement('option');
+          option.value = color;
+          option.textContent = color;
+          colorSelect.appendChild(option);
+        });
+      } else {
+        const option = document.createElement('option');
+        option.textContent = 'ワンカラー';
+        colorSelect.appendChild(option);
+      }
+    });
+
+    function addToCart(event) {
+      event.preventDefault();
+      
+      // 商品情報の取得
+      const product = {
+        id: currentProduct.id,
+        name: currentProduct.name,
+        price: currentProduct.price,
+        color: document.getElementById('product-color').value,
+        quantity: parseInt(document.getElementById('product-quantity').value),
+        image: currentProduct.image
+      };
+
+      // LocalStorageを使用
+      let cart = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+      cart.push(product);
+      localStorage.setItem('tokyoSaunaCart', JSON.stringify(cart));
+      if (window.updateCartBadge) window.updateCartBadge();
+
+      if(confirm(`カートに追加しました。\n商品: ${product.name}\nカートを見ますか？`)) {
+        window.location.href = 'cart.html';
+      }
+    }
+  </script>
+</body>
+</html>

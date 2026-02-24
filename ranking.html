@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最新サウナランキングTOP10 - サウナデツナガル</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1 class="logo">
+                <a href="index.html">
+                    <div class="site-branding">
+                        <span class="logo-text">SaunaDeTsunagaru</span>
+                        <span class="logo-sub">サウナデツナガル</span>
+                    </div>
+                </a>
+            </h1>
+            <button class="hamburger-menu"><span></span></button>
+            <nav>
+                <ul>
+                    <li><a href="ranking.html">ランキング</a></li>
+                    <li><a href="ladies-sauna.html">レディース</a></li>
+                    <li><a href="work-sauna.html">作業・コワーキング</a></li>
+                    <li><a href="beginner-sauna.html">初心者向け</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-wrapper">
+                <div class="main-content">
+                    <section class="ranking-section">
+                        <h2 style="text-align: center; margin-bottom: 30px;">最新サウナランキング TOP10</h2>
+                        
+                        <!-- 1位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge gold">1位</span>
+                                <span class="total-score">9.8</span>
+                            </div>
+                            <img src="images/スパラクーア.webp" alt="スパ ラクーア" class="facility-image">
+                            <h2>スパ ラクーア</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 後楽園</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,230円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>都心にいながらリゾート気分。4種類のサウナと天然温泉で極上の癒やしを。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('laqua')">詳細を見る</a>
+                        </div>
+
+                        <!-- 2位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge silver">2位</span>
+                                <span class="total-score">9.6</span>
+                            </div>
+                            <img src="images/黄金湯.webp" alt="黄金湯" class="facility-image">
+                            <h2>黄金湯</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 錦糸町</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>老舗銭湯がリニューアル。オートロウリュサウナと水風呂の導線が完璧。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('koganeyu')">詳細を見る</a>
+                        </div>
+
+                        <!-- 3位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge bronze">3位</span>
+                                <span class="total-score">9.5</span>
+                            </div>
+                            <img src="images/渋谷SAUNAS.webp" alt="渋谷SAUNAS" class="facility-image">
+                            <h2>渋谷SAUNAS</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 渋谷</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,080円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>サ道著者監修。9つのサウナと水風呂を楽しめるサウナのテーマパーク。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('saunas')">詳細を見る</a>
+                        </div>
+
+                        <!-- 4位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">4位</span>
+                                <span class="total-score">9.3</span>
+                            </div>
+                            <img src="images/両国江戸遊.webp" alt="両国湯屋 江戸遊" class="facility-image">
+                            <h2>両国湯屋 江戸遊</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 両国</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 2,970円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>和モダンな空間でリラックス。コワーキングスペースも完備で一日過ごせる。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('edoyu')">詳細を見る</a>
+                        </div>
+
+                        <!-- 5位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">5位</span>
+                                <span class="total-score">9.1</span>
+                            </div>
+                            <img src="images/TimesSPA RESTA.webp" alt="タイムズ スパ・レスタ" class="facility-image">
+                            <h2>タイムズ スパ・レスタ</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 池袋</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,150円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 18歳以上</span>
+                            </div>
+                            <p>大人のための上質空間。露天風呂での外気浴は格別の心地よさ。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('resta')">詳細を見る</a>
+                        </div>
+
+                        <!-- 6位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">6位</span>
+                                <span class="total-score">9.0</span>
+                            </div>
+                            <img src="images/改良湯.webp" alt="改良湯" class="facility-image">
+                            <h2>改良湯</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 渋谷</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>スタイリッシュなデザイナーズ銭湯。薄暗いサウナ室で没入感たっぷり。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('kairyouyu')">詳細を見る</a>
+                        </div>
+
+                        <!-- 7位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">7位</span>
+                                <span class="total-score">8.9</span>
+                            </div>
+                            <img src="images/ROOFTOP.webp" alt="ROOFTOP" class="facility-image">
+                            <h2>ROOFTOP</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 西荻窪</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 1,980円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>西荻窪の屋上にある本格フィンランドサウナ。広々とした外気浴スペースが自慢。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('rooftop')">詳細を見る</a>
+                        </div>
+
+                        <!-- 8位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">8位</span>
+                                <span class="total-score">8.8</span>
+                            </div>
+                            <img src="images/SaunaLab Kanda.webp" alt="SaunaLab Kanda" class="facility-image">
+                            <h2>SaunaLab Kanda</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 神田</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 2,700円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>実験的なサウナ体験。マイナス25℃のアイスサウナで新感覚のととのいを。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('saunalab')">詳細を見る</a>
+                        </div>
+
+                        <!-- 9位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">9位</span>
+                                <span class="total-score">8.7</span>
+                            </div>
+                            <img src="images/堀田湯.webp" alt="堀田湯" class="facility-image">
+                            <h2>堀田湯</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 西新井</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>露天風呂にある水深160cmの水風呂と、オートロウリュサウナが魅力。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('hottayu')">詳細を見る</a>
+                        </div>
+
+                        <!-- 10位 -->
+                        <div class="ranking-item">
+                            <div class="rank-header">
+                                <span class="rank-badge">10位</span>
+                                <span class="total-score">8.5</span>
+                            </div>
+                            <img src="images/COCOFUROかが浴場.webp" alt="COCOFUROかが浴場" class="facility-image">
+                            <h2>COCOFUROかが浴場</h2>
+                            <div class="ranking-tags">
+                                <span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 王子</span>
+                                <span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>
+                                <span class="tag tag-type"><i class="fas fa-users"></i> 男女利用可</span>
+                            </div>
+                            <p>爆風ミュージックロウリュが名物。エンタメ性抜群の銭湯サウナ。</p>
+                            <a href="javascript:void(0)" class="btn btn-detail" onclick="openModal('cocofuro')">詳細を見る</a>
+                        </div>
+
+                    </section>
+                </div>
+                
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3>プロフィール</h3>
+                        <div class="sidebar-profile">
+                            <img src="images/トップアイコン.webp" alt="tokyosauna">
+                            <p style="font-weight:bold; margin-bottom:5px;">tokyosauna</p>
+                            <p style="font-size:0.85rem; margin:0;">サウナと筋トレが大好きな都内28歳社会人。週末はととのい巡り！</p>
+                            <a href="profile.html" class="btn btn-detail" style="margin-top:10px; font-size:0.8rem;">詳細プロフィール</a>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h3>おすすめ記事</h3>
+                        <ul class="sidebar-link-list">
+                            <li><a href="ranking.html">👑 最新サウナランキングTOP10</a></li>
+                            <li><a href="ladies-sauna.html">🧖‍♀️ 都内レディースサウナ10選</a></li>
+                            <li><a href="work-sauna.html">💻 作業できるサウナ5選</a></li>
+                            <li><a href="beginner-sauna.html">🔰 初心者向けサウナ3選</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="index.html">ホーム</a></li>
+                    <li><a href="ranking.html">ランキング</a></li>
+                    <li><a href="about.html">運営者情報</a></li>
+                    <li><a href="privacy.html">プライバシーポリシー</a></li>
+                    <li><a href="contact.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+            <p class="copyright">&copy; 2024 SaunaDeTsunagaru All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="mobile-sticky-footer">
+        <a href="index.html" class="sticky-btn">
+            <span>🏠</span>ホーム
+        </a>
+        <a href="ranking.html" class="sticky-btn primary">
+            <span>👑</span>ランキング
+        </a>
+        <a href="search.html" class="sticky-btn">
+            <span>🔍</span>検索
+        </a>
+        <a href="shop.html" class="sticky-btn">
+            <span>🛍️</span>グッズ
+        </a>
+    </div>
+
+    <script src="common.js"></script>
+    
+    <!-- モーダルウィンドウ -->
+    <div id="facilityModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <img src="" alt="" id="modalImg" class="modal-facility-img">
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <div id="modalTags" class="ranking-tags"></div>
+            <p id="modalDesc" style="line-height: 1.6; color: #555;"></p>
+            
+            <table class="modal-info-table">
+                <tr><th>📍 住所</th><td id="modalAddress"></td></tr>
+                <tr><th>🚊 アクセス</th><td id="modalAccess"></td></tr>
+                <tr><th>🕐 営業時間</th><td id="modalHours"></td></tr>
+                <tr><th>💰 料金</th><td id="modalPrice"></td></tr>
+                <tr><th>✨ 特徴</th><td id="modalFeature"></td></tr>
+            </table>
+
+            <div class="modal-actions">
+                <a href="#" id="modalLink" target="_blank" class="btn btn-primary">公式サイトへ</a>
+                <a href="#" class="btn btn-secondary" onclick="closeModal(); return false;">閉じる</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 施設データ
+        const facilities = {
+            'laqua': {
+                name: 'スパ ラクーア',
+                image: 'images/スパラクーア.webp',
+                desc: '東京ドームシティにある都内最大級のスパ施設。4種類のサウナと天然温泉、リラクゼーションスペースが充実しており、一日中過ごせます。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 後楽園</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,230円〜</span>',
+                address: '東京都文京区春日1-1-1',
+                access: '後楽園駅 徒歩1分',
+                hours: '11:00～翌9:00',
+                price: '3,230円〜',
+                feature: '天然温泉、サウナ4種、アウフグースあり',
+                url: 'https://www.laqua.jp/spa/'
+            },
+            'koganeyu': {
+                name: '黄金湯',
+                image: 'images/黄金湯.webp',
+                desc: '老舗銭湯がクリエイティブにリニューアル。オートロウリュサウナと水風呂の導線が完璧で、サウナーからの支持が絶大です。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 錦糸町</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>',
+                address: '東京都墨田区太平4-14-6',
+                access: '錦糸町駅 徒歩6分',
+                hours: '平日 11:00～24:30 / 土日 15:00〜24:30',
+                price: '入浴料520円 + サウナ代',
+                feature: 'DJブース、ビアバー併設、オートロウリュ',
+                url: 'https://koganeyu.com/'
+            },
+            'saunas': {
+                name: '渋谷SAUNAS',
+                image: 'images/渋谷SAUNAS.webp',
+                desc: '「サ道」タナカカツキ氏監修。9つのサウナと水風呂を楽しめるサウナのテーマパーク。男女日替わりで全てのサウナを楽しめます。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 渋谷</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,080円〜</span>',
+                address: '東京都渋谷区桜丘町18-9',
+                access: '渋谷駅 徒歩5分',
+                hours: '8:00～23:00',
+                price: '平日 3,080円〜',
+                feature: '9種類のサウナ、サウンドサウナ、ウィスキング',
+                url: 'https://saunas-saunas.com/'
+            },
+            'edoyu': {
+                name: '両国湯屋 江戸遊',
+                image: 'images/両国江戸遊.webp',
+                desc: '和モダンな空間でリラックス。コワーキングスペースも完備で一日過ごせる温浴施設。岩盤浴も料金に含まれています。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 両国</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 2,970円〜</span>',
+                address: '東京都墨田区亀沢1-5-8',
+                access: '両国駅 徒歩1分',
+                hours: '10:00～翌8:30',
+                price: '2,970円〜',
+                feature: 'コワーキングスペース、岩盤浴込み、泥パック',
+                url: 'https://www.edoyu.com/ryougoku/'
+            },
+            'resta': {
+                name: 'タイムズ スパ・レスタ',
+                image: 'images/TimesSPA RESTA.webp',
+                desc: '18歳以上限定の大人のための上質空間。露天風呂での外気浴は格別の心地よさ。映画や食事が楽しめるラウンジも完備。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 池袋</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 3,150円〜</span>',
+                address: '東京都豊島区東池袋4-25-9',
+                access: '池袋駅 徒歩8分',
+                hours: '11:00～翌8:30',
+                price: '3,150円〜',
+                feature: '18歳以上限定、プレミアムラウンジ、オートロウリュ',
+                url: 'https://www.timesspa-resta.jp/'
+            },
+            'kairyouyu': {
+                name: '改良湯',
+                image: 'images/改良湯.webp',
+                desc: '創業100年を超える老舗がスタイリッシュに進化。薄暗いサウナ室と間接照明が落ち着く、デザイナーズ銭湯の先駆け。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 渋谷</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>',
+                address: '東京都渋谷区東2-19-9',
+                access: '渋谷駅 徒歩10分',
+                hours: '12:00～23:30 (土曜定休)',
+                price: '入浴料520円 + サウナ代',
+                feature: 'デザイナーズ銭湯、遠赤外線サウナ、炭酸泉',
+                url: 'https://kairyou-yu.com/'
+            },
+            'rooftop': {
+                name: 'ROOFTOP',
+                image: 'images/ROOFTOP.webp',
+                desc: '西荻窪の屋上にある本格フィンランドサウナ。広々とした外気浴スペースが自慢で、空を見上げながらととのえます。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 西荻窪</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 1,980円〜</span>',
+                address: '東京都杉並区西荻南3-14-7',
+                access: '西荻窪駅 徒歩0分',
+                hours: '8:00～23:00',
+                price: '1時間 1,480円〜',
+                feature: '屋上外気浴、オートロウリュ、コワーキング併設',
+                url: 'https://rooftoptokyo.jp/'
+            },
+            'saunalab': {
+                name: 'SaunaLab Kanda',
+                image: 'images/SaunaLab Kanda.webp',
+                desc: '実験的なサウナ体験ができる施設。マイナス25℃のアイスサウナや、瞑想できるサウナなど、新感覚のととのいを提供。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 神田</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 2,700円〜</span>',
+                address: '東京都千代田区神田錦町3-9',
+                access: '神保町駅 徒歩3分',
+                hours: '11:00～21:30',
+                price: '90分 2,700円',
+                feature: 'アイスサウナ、フォレストサウナ、ポンチョ着用',
+                url: 'http://saunalab.jp/kanda/'
+            },
+            'hottayu': {
+                name: '堀田湯',
+                image: 'images/堀田湯.webp',
+                desc: '露天風呂にある水深160cmの水風呂と、オートロウリュサウナが魅力。商店街の中にありながら、本格的なサウナ体験が可能。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 西新井</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>',
+                address: '東京都足立区関原3-20-14',
+                access: '西新井駅 徒歩7分',
+                hours: '11:00～23:00',
+                price: '入浴料520円 + サウナ代',
+                feature: '深水風呂、薬草サウナ、露天外気浴',
+                url: 'https://www.4126.tokyo/'
+            },
+            'cocofuro': {
+                name: 'COCOFUROかが浴場',
+                image: 'images/COCOFUROかが浴場.webp',
+                desc: '爆風ミュージックロウリュが名物。音楽と熱風に合わせて盛り上がる、エンタメ性抜群の銭湯サウナです。',
+                tags: '<span class="tag tag-area"><i class="fas fa-map-marker-alt"></i> 王子</span><span class="tag tag-price"><i class="fas fa-yen-sign"></i> 520円〜</span>',
+                address: '東京都北区王子本町1-29-3',
+                access: '王子駅 徒歩7分',
+                hours: '6:00～24:00',
+                price: '入浴料520円 + サウナ代',
+                feature: 'ミュージックロウリュ、朝風呂あり、デザイナーズ',
+                url: 'https://cocofuro.com/kagayokujo/'
+            }
+        };
+
+        function openModal(id) {
+            const data = facilities[id];
+            if (!data) return;
+
+            document.getElementById('modalImg').src = data.image;
+            document.getElementById('modalTitle').textContent = data.name;
+            document.getElementById('modalTags').innerHTML = data.tags;
+            document.getElementById('modalDesc').textContent = data.desc;
+            document.getElementById('modalAddress').textContent = data.address;
+            document.getElementById('modalAccess').textContent = data.access;
+            document.getElementById('modalHours').textContent = data.hours;
+            document.getElementById('modalPrice').textContent = data.price;
+            document.getElementById('modalFeature').textContent = data.feature;
+            document.getElementById('modalLink').href = data.url;
+
+            const modal = document.getElementById('facilityModal');
+            modal.style.display = 'flex';
+            // アニメーション用
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('facilityModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // モーダル外クリックで閉じる
+        document.getElementById('facilityModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

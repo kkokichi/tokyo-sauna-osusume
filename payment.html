@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お支払い｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <div class="container">
+    <h1>お支払い</h1>
+    <div class="payment-layout" style="display: flex; gap: 30px; flex-wrap: wrap;">
+    <div class="payment-main">
+    <div class="step-indicator">
+      <span>1. 配送先・方法</span> &gt; <span class="active">2. お支払い</span> &gt; <span>3. 完了</span>
+    </div>
+
+    <div class="contact-form">
+    <form onsubmit="savePaymentAndNext(event)">
+      <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">お支払い方法</h3>
+      
+      <div style="margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee;">
+        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif;">クーポンコード</label>
+        <div style="display: flex; gap: 1rem;">
+          <input type="text" id="coupon-input" placeholder="コードを入力" style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px;">
+          <button type="button" class="btn-secondary" onclick="applyCoupon()">適用</button>
+        </div>
+        <p id="coupon-message" style="margin-top: 0.5rem; font-size: 0.9rem;"></p>
+      </div>
+
+      <label class="radio-group">
+        <input type="radio" name="payment" value="card" checked onclick="document.getElementById('card-info').style.display='block'">
+        <div><strong>クレジットカード</strong></div>
+      </label>
+      
+      <div id="card-info" class="card-details" style="display: block;">
+        <div class="form-group">
+          <label>カード番号</label>
+          <input type="text" placeholder="0000 0000 0000 0000">
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <div class="form-group" style="flex: 1;">
+            <label>有効期限</label>
+            <input type="text" placeholder="MM/YY">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>CVC</label>
+            <input type="text" placeholder="123">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>カード名義</label>
+          <input type="text" placeholder="TARO YAMADA">
+        </div>
+      </div>
+
+      <label class="radio-group">
+        <input type="radio" name="payment" value="bank" onclick="document.getElementById('card-info').style.display='none'">
+        <div><strong>銀行振込</strong></div>
+      </label>
+
+      <label class="radio-group">
+        <input type="radio" name="payment" value="cod" onclick="document.getElementById('card-info').style.display='none'">
+        <div><strong>代金引換</strong></div>
+      </label>
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 2rem; width: 100%;">確認画面へ進む</button>
+    </form>
+    </div>
+    </div>
+
+    <div class="payment-sidebar">
+      <div class="order-summary-box">
+        <h3 style="margin-bottom: 1rem; font-family: 'Playfair Display', serif; font-size: 1.5rem;">注文概要</h3>
+        <div class="summary-line">
+          <span>小計</span>
+          <span id="summary-subtotal">¥0</span>
+        </div>
+        <div class="summary-line discount">
+          <span>割引</span>
+          <span id="summary-discount">-¥0</span>
+        </div>
+        <div class="summary-line total">
+          <span>合計</span>
+          <span id="summary-total">¥0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="common.js"></script>
+
+  <script>
+    let cartTotal = 0;
+    let currentDiscountPercent = 0;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // カート合計金額の計算
+      const cart = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+      cartTotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      updateSummary();
+
+      // 適用済みクーポンの確認
+      const appliedCoupon = JSON.parse(sessionStorage.getItem('tokyoSaunaAppliedCoupon'));
+      if (appliedCoupon) {
+        document.getElementById('coupon-input').value = appliedCoupon.code;
+        applyCoupon();
+      }
+    });
+
+    function updateSummary() {
+      const discountAmount = Math.floor(cartTotal * (currentDiscountPercent / 100));
+      const finalTotal = cartTotal - discountAmount;
+
+      document.getElementById('summary-subtotal').textContent = '¥' + cartTotal.toLocaleString();
+      document.getElementById('summary-discount').textContent = '-¥' + discountAmount.toLocaleString();
+      document.getElementById('summary-total').textContent = '¥' + finalTotal.toLocaleString();
+    }
+
+    function applyCoupon() {
+      const inputCode = document.getElementById('coupon-input').value;
+      const messageEl = document.getElementById('coupon-message');
+      
+      // 管理画面で保存されたクーポンを取得
+      const coupons = JSON.parse(localStorage.getItem('tokyoSaunaCoupons')) || [];
+      const validCoupon = coupons.find(c => c.code === inputCode);
+
+      if (validCoupon) {
+        currentDiscountPercent = validCoupon.discount;
+        messageEl.style.color = '#d97706';
+        messageEl.textContent = `${validCoupon.discount}%OFF クーポンを適用しました！`;
+        sessionStorage.setItem('tokyoSaunaAppliedCoupon', JSON.stringify(validCoupon));
+      } else {
+        currentDiscountPercent = 0;
+        messageEl.style.color = 'red';
+        messageEl.textContent = '無効なクーポンコードです。';
+        sessionStorage.removeItem('tokyoSaunaAppliedCoupon');
+      }
+      updateSummary();
+    }
+
+    function savePaymentAndNext(e) {
+      e.preventDefault();
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      const paymentInfo = {
+        method: paymentMethod
+      };
+      sessionStorage.setItem('tokyoSaunaPayment', JSON.stringify(paymentInfo));
+      window.location.href = 'complete.html';
+    }
+  </script>
+</body>
+</html>

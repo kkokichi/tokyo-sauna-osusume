@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>配送方法｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <div class="container">
+    <h1>配送方法の選択</h1>
+    <div class="step-indicator">
+      <span class="active">1. 配送先・方法</span> &gt; <span>2. お支払い</span> &gt; <span>3. 完了</span>
+    </div>
+
+    <div class="contact-form" style="max-width: 600px; margin: 0 auto;">
+    <form onsubmit="saveShippingAndNext(event)">
+      <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">お届け先住所</h3>
+      <div class="form-group">
+        <label for="name">お名前</label>
+        <input type="text" id="name" required placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label for="zip">郵便番号</label>
+        <input type="text" id="zip" required placeholder="150-0031">
+      </div>
+      <div class="form-group">
+        <label for="address">住所</label>
+        <input type="text" id="address" required placeholder="東京都渋谷区桜丘町17-9">
+      </div>
+      <div class="form-group">
+        <label for="phone">電話番号</label>
+        <input type="tel" id="phone" required placeholder="03-1234-5678">
+      </div>
+
+      <h3 style="margin: 2.5rem 0 1.5rem; font-family: 'Playfair Display', serif;">配送方法</h3>
+      <label class="radio-group">
+        <input type="radio" name="shipping" value="normal" checked>
+        <div>
+          <strong>通常配送</strong><br>
+          <span style="font-size: 0.9rem; color: #666;">送料無料 (3-5営業日)</span>
+        </div>
+      </label>
+      <label class="radio-group">
+        <input type="radio" name="shipping" value="express">
+        <div>
+          <strong>お急ぎ便</strong><br>
+          <span style="font-size: 0.9rem; color: #666;">+500円 (1-2営業日)</span>
+        </div>
+      </label>
+
+      <button type="submit" class="btn btn-primary" style="margin-top: 2rem; width: 100%;">お支払いへ進む</button>
+    </form>
+    </div>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="common.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. ログインユーザー情報の自動入力
+      const currentUser = JSON.parse(sessionStorage.getItem('tokyoSaunaCurrentUser'));
+      if (currentUser) {
+        const nameInput = document.getElementById('name');
+        if (nameInput) nameInput.value = currentUser.name;
+      }
+
+      // 2. カートバッジの更新
+      const cart = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      const badge = document.getElementById('cart-badge');
+      
+      if (totalItems > 0) {
+        badge.textContent = totalItems;
+        badge.style.display = 'flex';
+      }
+    });
+
+    function saveShippingAndNext(e) {
+      e.preventDefault();
+      const shippingInfo = {
+        name: document.getElementById('name').value,
+        zip: document.getElementById('zip').value,
+        address: document.getElementById('address').value,
+        phone: document.getElementById('phone').value,
+        method: document.querySelector('input[name="shipping"]:checked').value
+      };
+      
+      sessionStorage.setItem('tokyoSaunaShipping', JSON.stringify(shippingInfo));
+      window.location.href = 'payment.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新規会員登録｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* 共通スタイル (簡易版) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Source Serif 4', serif; line-height: 1.8; color: #1a1a1a; }
+    a { text-decoration: none; color: inherit; transition: color 0.3s; }
+    a:hover { color: #d97706; }
+    
+    header { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; padding: 1rem 0; }
+    header .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.1em; }
+    nav ul { display: flex; gap: 2rem; list-style: none; }
+    nav a { font-family: 'Space Grotesk', sans-serif; font-weight: 500; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    .page-header { background: #f9f5f0; padding: 4rem 2rem; text-align: center; margin-bottom: 4rem; }
+    .page-header h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; }
+
+    /* フォームスタイル */
+    .login-container { max-width: 500px; margin: 0 auto 6rem; padding: 0 2rem; }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif; }
+    .form-group input { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; }
+    
+    .btn-primary {
+      font-family: 'Space Grotesk', sans-serif;
+      display: block; width: 100%;
+      background: #d97706; color: white;
+      padding: 1rem; border-radius: 50px;
+      text-align: center; font-weight: 600;
+      border: none; cursor: pointer; font-size: 1rem;
+      transition: all 300ms ease;
+    }
+    .btn-primary:hover { background: #b45309; transform: translateY(-2px); }
+
+    .login-links { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #666; }
+    .login-links a { text-decoration: underline; }
+
+    footer { background: #2d1f16; color: #d4b896; text-align: center; padding: 2rem; margin-top: auto; }
+    footer .footer-sns { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
+    footer .footer-sns a { font-size: 1.5rem; }
+    
+    @media (max-width: 768px) { nav ul { gap: 1rem; font-size: 0.9rem; } }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><a href="top.html">東京サウナ</a></h1>
+      <nav>
+        <ul>
+          <li><a href="top.html#concept">コンセプト</a></li>
+          <li><a href="top.html#facility">施設紹介</a></li>
+          <li><a href="top.html#price">料金</a></li>
+          <li><a href="store.html">グッズ</a></li>
+          <li><a href="top.html#access">アクセス</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+          <li><a href="admin.html">管理</a></li>
+          <li><a href="cart.html" aria-label="カート"><i class="fas fa-shopping-cart"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h2>Register</h2>
+  </div>
+
+  <section class="login-container">
+    <form onsubmit="registerUser(event)">
+      <div class="form-group">
+        <label for="name">お名前</label>
+        <input type="text" id="name" required placeholder="山田 太郎">
+      </div>
+      <div class="form-group">
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" required placeholder="example@tokyosauna.com">
+      </div>
+      <div class="form-group">
+        <label for="password">パスワード</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" class="btn-primary" id="register-btn" disabled>読み込み中...</button>
+    </form>
+    <div class="login-links">
+      <p>すでにアカウントをお持ちの方は <a href="login.html">ログイン</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-sns">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+    </div>
+    <p>© TOKYO SAUNA</p>
+  </footer>
+
+  <script>
+    function registerUser(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // ユーザー作成成功後、Firestoreに詳細情報を保存
+          return db.collection('users').doc(userCredential.user.uid).set({
+            name: name,
+            email: email,
+            registeredAt: new Date()
+          });
+        })
+        .then(() => {
+          alert('会員登録が完了しました。\n自動的にログインします。');
+          window.location.href = 'mypage.html';
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('登録に失敗しました: ' + error.message);
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注文完了｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <div class="container">
+    <h1>注文完了</h1>
+    <div class="complete-container" style="text-align: center; max-width: 600px; margin: 0 auto;">
+    <div class="step-indicator">
+      <span>1. 配送先・方法</span> &gt; <span>2. お支払い</span> &gt; <span>3. 確認</span> &gt; <span class="active">4. 完了</span>
+    </div>
+
+    <div class="complete-icon" style="font-size: 4rem; color: #4caf50; margin-bottom: 20px;"><i class="fas fa-check-circle"></i></div>
+    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem;">ご注文ありがとうございます</h3>
+    <p>注文が正常に完了しました。<br>ご登録のメールアドレスへ確認メールを送信しました。</p>
+
+    <div class="order-info" style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin: 30px 0; text-align: left;">
+      <h4 style="border-bottom:1px solid #ddd; padding-bottom:0.5rem; margin-bottom:1rem;">配送予定</h4>
+      <p><strong>お届け予定日:</strong> <span id="delivery-date"></span></p>
+      <p style="font-size:0.9rem; color:#666; margin-top:0.5rem;">※交通状況により前後する場合がございます。</p>
+      
+      <div class="coupon-box" style="background: #fff3e0; border: 1px dashed #e65100; padding: 15px; margin-top: 20px; text-align: center; border-radius: 6px;">
+        <p style="color: #e65100; font-weight: bold; margin-bottom: 5px;">次回のお買い物で使える<br>10%OFFクーポンをプレゼント！</p>
+        <div class="coupon-code" style="font-family: monospace; font-size: 1.2rem; background: #fff; display: inline-block; padding: 5px 15px; border: 1px solid #ccc; margin: 5px 0;">SAUNA2024</div>
+        <p style="font-size:0.8rem; color: #666;">有効期限: 2024年12月31日まで</p>
+      </div>
+    </div>
+
+    <a href="index.html" class="btn btn-primary">トップページへ戻る</a>
+    </div>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="common.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 配送予定日の計算 (3日後)
+      const date = new Date();
+      date.setDate(date.getDate() + 3);
+      const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
+      document.getElementById('delivery-date').textContent = date.toLocaleDateString('ja-JP', options);
+    });
+  </script>
+</body>
+</html>

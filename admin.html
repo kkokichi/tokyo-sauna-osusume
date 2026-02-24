@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 | サウナデツナガル</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <!-- ログインオーバーレイ -->
+        <div id="admin-login-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+            <div style="background: #fff; padding: 40px; border-radius: 8px; text-align: center; max-width: 400px; width: 90%;">
+                <h2>管理者ログイン</h2>
+                <input type="password" id="admin-password" placeholder="パスワード" style="width: 100%; padding: 10px; margin: 20px 0; border: 1px solid #ccc; border-radius: 4px;">
+                <button onclick="checkAdminPassword()" class="btn btn-primary" style="width: 100%;">ログイン</button>
+                <p id="login-error" style="color: red; margin-top: 10px; display: none;">パスワードが間違っています</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>管理者ダッシュボード</h1>
+            
+            <div class="admin-dashboard">
+                <!-- サイドバー -->
+                <aside class="admin-sidebar">
+                    <ul class="admin-menu">
+                        <li><a href="#" onclick="showSection('dashboard')" class="active" id="menu-dashboard">ダッシュボード</a></li>
+                        <li><a href="#" onclick="showSection('rankings')" id="menu-rankings">ユーザー投票</a></li>
+                        <li><a href="#" onclick="showSection('inquiries')" id="menu-inquiries">お問い合わせ</a></li>
+                        <li><a href="#" onclick="showSection('users')" id="menu-users">ユーザー一覧</a></li>
+                        <li><a href="#" onclick="showSection('orders')" id="menu-orders">購入履歴</a></li>
+                        <li><a href="#" onclick="showSection('reservations')" id="menu-reservations">予約履歴</a></li>
+                    </ul>
+                </aside>
+
+                <!-- メインコンテンツ -->
+                <div class="admin-content" id="section-dashboard">
+                    <h2>本日のサマリー</h2>
+                    <div class="stat-cards">
+                        <div class="stat-card">
+                            <span>総ユーザー数</span>
+                            <span class="stat-number" id="stat-users">-</span>
+                        </div>
+                        <div class="stat-card">
+                            <span>総注文数</span>
+                            <span class="stat-number" id="stat-orders">-</span>
+                        </div>
+                        <div class="stat-card">
+                            <span>総予約数</span>
+                            <span class="stat-number" id="stat-reservations">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ユーザー投票 -->
+                <div class="admin-content" id="section-rankings" style="display:none;">
+                    <h2>みんなの推しサウナ投票</h2>
+                    <div id="rankings-list"></div>
+                </div>
+
+                <!-- お問い合わせ -->
+                <div class="admin-content" id="section-inquiries" style="display:none;">
+                    <h2>お問い合わせ一覧</h2>
+                    <div id="inquiries-list"></div>
+                </div>
+
+                <!-- ユーザー一覧 -->
+                <div class="admin-content" id="section-users" style="display:none;">
+                    <h2>ユーザー一覧</h2>
+                    <div id="users-list"></div>
+                </div>
+
+                <!-- 購入履歴 -->
+                <div class="admin-content" id="section-orders" style="display:none;">
+                    <h2>購入履歴</h2>
+                    <div id="orders-list"></div>
+                </div>
+
+                <!-- 予約履歴 -->
+                <div class="admin-content" id="section-reservations" style="display:none;">
+                    <h2>予約履歴</h2>
+                    <div id="reservations-list"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
+    <script src="common.js"></script>
+    <script>
+        function checkAdminPassword() {
+            const password = document.getElementById('admin-password').value;
+            if (password === 'Admin123') {
+                document.getElementById('admin-login-overlay').style.display = 'none';
+                loadDashboardData();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function showSection(sectionId) {
+            // メニューのアクティブ切り替え
+            document.querySelectorAll('.admin-menu a').forEach(el => el.classList.remove('active'));
+            document.getElementById('menu-' + sectionId).classList.add('active');
+
+            // コンテンツの表示切り替え
+            document.querySelectorAll('.admin-content').forEach(el => el.style.display = 'none');
+            document.getElementById('section-' + sectionId).style.display = 'block';
+
+            // データ読み込み
+            if (sectionId === 'rankings') loadRankings();
+            if (sectionId === 'inquiries') loadInquiries();
+            if (sectionId === 'users') loadUsers();
+            if (sectionId === 'orders') loadOrders();
+            if (sectionId === 'reservations') loadReservations();
+        }
+
+        function loadDashboardData() {
+            db.collection('users').get().then(snap => document.getElementById('stat-users').textContent = snap.size + '名');
+            db.collection('orders').get().then(snap => document.getElementById('stat-orders').textContent = snap.size + '件');
+            db.collection('reservations').get().then(snap => document.getElementById('stat-reservations').textContent = snap.size + '件');
+        }
+
+        function createTable(headers, rows) {
+            let html = '<table class="admin-table"><thead><tr>';
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += '</tr></thead><tbody>';
+            rows.forEach(row => {
+                html += '<tr>';
+                row.forEach(cell => html += `<td>${cell}</td>`);
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            return html;
+        }
+
+        function loadRankings() {
+            db.collection('user_rankings').orderBy('createdAt', 'desc').get().then(snapshot => {
+                const rows = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    rows.push([d.sauna, d.createdAt ? d.createdAt.toDate().toLocaleString() : '-']);
+                });
+                document.getElementById('rankings-list').innerHTML = createTable(['施設名', '投票日時'], rows);
+            });
+        }
+
+        function loadInquiries() {
+            db.collection('inquiries').orderBy('createdAt', 'desc').get().then(snapshot => {
+                const rows = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    rows.push([d.name, d.email, d.message, d.createdAt ? d.createdAt.toDate().toLocaleString() : '-']);
+                });
+                document.getElementById('inquiries-list').innerHTML = createTable(['名前', 'Email', '内容', '日時'], rows);
+            });
+        }
+
+        function loadUsers() {
+            db.collection('users').get().then(snapshot => {
+                const rows = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    rows.push([d.name, d.email, d.registeredAt ? new Date(d.registeredAt.seconds * 1000).toLocaleString() : '-']);
+                });
+                document.getElementById('users-list').innerHTML = createTable(['名前', 'Email', '登録日時'], rows);
+            });
+        }
+
+        function loadOrders() {
+            db.collection('orders').orderBy('orderDate', 'desc').get().then(snapshot => {
+                const rows = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    const items = d.items.map(i => `${i.name} x${i.quantity}`).join(', ');
+                    rows.push([d.userId, items, '¥' + d.finalTotal.toLocaleString(), d.orderDate ? d.orderDate.toDate().toLocaleString() : '-']);
+                });
+                document.getElementById('orders-list').innerHTML = createTable(['User ID', '商品', '合計', '注文日時'], rows);
+            });
+        }
+
+        function loadReservations() {
+            db.collection('reservations').orderBy('createdAt', 'desc').get().then(snapshot => {
+                const rows = [];
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    rows.push([d.userId, d.reservationDate, d.reservationTime, d.plan]);
+                });
+                document.getElementById('reservations-list').innerHTML = createTable(['User ID', '日付', '時間', 'プラン'], rows);
+            });
+        }
+    </script>
+</body>
+</html>

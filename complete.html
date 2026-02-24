@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注文確認｜東京サウナ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <div class="container">
+    <h1>注文内容の確認</h1>
+    <div class="step-indicator">
+      <span>1. 配送先・方法</span> &gt; <span>2. お支払い</span> &gt; <span class="active">3. 確認</span>
+    </div>
+
+    <div class="contact-form" style="max-width: 800px; margin: 0 auto;">
+      <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">お届け先</h3>
+      <div id="shipping-summary" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;"></div>
+
+      <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">お支払い方法</h3>
+      <div id="payment-summary" style="margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #eee;"></div>
+
+      <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">注文商品</h3>
+      <div id="cart-summary" style="margin-bottom: 2rem;"></div>
+
+      <div class="order-total-box" style="background: #f9f9f9; padding: 20px; border-radius: 8px; text-align: right;">
+        <p style="font-size: 1.2rem; font-weight: bold;">合計金額: <span id="final-total" style="color: #e53935; font-size: 1.5rem;"></span></p>
+      </div>
+
+      <div style="display: flex; gap: 20px; margin-top: 30px;">
+        <button onclick="window.history.back()" class="btn btn-secondary" style="flex: 1;">戻る</button>
+        <button onclick="finalizeOrder()" class="btn btn-primary" style="flex: 2;">注文を確定する</button>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <footer></footer>
+  <script src="common.js"></script>
+
+  <script>
+    let currentCartItems = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      currentCartItems = JSON.parse(localStorage.getItem('tokyoSaunaCart')) || [];
+      renderConfirmation();
+    });
+
+    function renderConfirmation() {
+      // 配送先情報
+      const shipping = JSON.parse(sessionStorage.getItem('tokyoSaunaShipping'));
+      if (shipping) {
+        const methodText = shipping.method === 'express' ? 'お急ぎ便 (+500円)' : '通常配送 (無料)';
+        document.getElementById('shipping-summary').innerHTML = `
+          <p><strong>お名前:</strong> ${shipping.name}</p>
+          <p><strong>住所:</strong> 〒${shipping.zip} ${shipping.address}</p>
+          <p><strong>電話番号:</strong> ${shipping.phone}</p>
+          <p><strong>配送方法:</strong> ${methodText}</p>
+        `;
+      }
+
+      // 支払い方法
+      const payment = JSON.parse(sessionStorage.getItem('tokyoSaunaPayment'));
+      if (payment) {
+        let methodText = 'クレジットカード';
+        if (payment.method === 'bank') methodText = '銀行振込';
+        if (payment.method === 'cod') methodText = '代金引換';
+        document.getElementById('payment-summary').innerHTML = `<p>${methodText}</p>`;
+      }
+
+      // カート商品
+      const cartContainer = document.getElementById('cart-summary');
+      const appliedCoupon = JSON.parse(sessionStorage.getItem('tokyoSaunaAppliedCoupon'));
+      let total = 0;
+      let html = '<ul style="list-style:none; padding:0;">';
+
+      currentCartItems.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        html += `
+          <li style="display:flex; justify-content:space-between; border-bottom:1px solid #eee; padding: 10px 0;">
+            <div style="display:flex; gap:10px; align-items:center;">
+              <img src="${item.image.replace(/\.(jpg|png)$/, '.webp')}" style="width:50px; height:50px; object-fit:cover; border-radius:4px;">
+              <div>
+                <div style="font-weight:bold;">${item.name}</div>
+                <div style="font-size:0.85rem; color:#666;">${item.color} x ${item.quantity}</div>
+              </div>
+            </div>
+            <div>¥${subtotal.toLocaleString()}</div>
+          </li>
+        `;
+      });
+
+      // 送料加算
+      let shippingCost = 0;
+      if (shipping && shipping.method === 'express') shippingCost = 500;
+      total += shippingCost;
+      
+      // 割引計算
+      let discountAmount = 0;
+      if (appliedCoupon) {
+        discountAmount = Math.floor((total - shippingCost) * (appliedCoupon.discount / 100));
+      }
+      const finalTotal = total - discountAmount;
+
+      html += '</ul>';
+      cartContainer.innerHTML = html;
+      document.getElementById('final-total').textContent = '¥' + finalTotal.toLocaleString();
+    }
+
+    function finalizeOrder() {
+      // ユーザーIDの取得（ログインしていれば）
+      const currentUser = JSON.parse(sessionStorage.getItem('tokyoSaunaCurrentUser'));
+      const userId = currentUser ? currentUser.uid : 'guest';
+
+      const finalTotalStr = document.getElementById('final-total').textContent.replace(/[^0-9]/g, '');
+      const newOrder = {
+        userId: userId,
+        items: currentCartItems,
+        finalTotal: parseInt(finalTotalStr),
+        orderDate: new Date(),
+        shipping: JSON.parse(sessionStorage.getItem('tokyoSaunaShipping')),
+        payment: JSON.parse(sessionStorage.getItem('tokyoSaunaPayment'))
+      };
+
+      let orders = JSON.parse(localStorage.getItem('tokyoSaunaOrders')) || [];
+      orders.push(newOrder);
+      localStorage.setItem('tokyoSaunaOrders', JSON.stringify(orders));
+
+      // カートを空にする
+      localStorage.removeItem('tokyoSaunaCart');
+      sessionStorage.setItem('tokyoSaunaLastOrder', JSON.stringify(currentCartItems));
+      window.location.href = 'thankyou.html';
+    }
+  </script>
+</body>
+</html>

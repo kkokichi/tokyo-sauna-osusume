@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サウナデツナガル - 1分で見つかる気持ちいいサウナ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">最高の"ととのい"体験を、あなたに。</h2>
+                <p class="hero-subtitle">「サウナデツナガル」は、東京のサウナ情報を網羅した専門サイト。<br>プロが厳選した施設から、あなたの目的にぴったりのサウナがきっと見つかります。</p>
+                <div class="hero-cta">
+                    <a href="ranking.html" class="btn btn-primary">最新ランキングを見る</a>
+                    <a href="#feature" class="btn btn-secondary">特集から探す</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="page-wrapper">
+                <div class="main-content">
+             <!-- Features -->
+             <section id="feature" class="nav-section">
+                <h2>サウナ特集</h2>
+                <div class="category-grid">
+                    <a href="ladies-sauna.html" class="category-card">
+                        <div class="cat-icon">🧖‍♀️</div>
+                        <h3>都内レディースサウナ10選</h3>
+                        <p>女性も安心して楽しめる、綺麗で快適なサウナを厳選！</p>
+                        <span class="cat-action">記事を読む</span>
+                    </a>
+                    <a href="work-sauna.html" class="category-card">
+                        <div class="cat-icon">💻</div>
+                        <h3>仕事も"ととのう"サウナ5選</h3>
+                        <p>コワーキングスペース併設！仕事も捗る快適サウナ。</p>
+                        <span class="cat-action">記事を読む</span>
+                    </a>
+                    <a href="beginner-sauna.html" class="category-card">
+                        <div class="cat-icon">🔰</div>
+                        <h3>初心者向けサウナ3選</h3>
+                        <p>「ととのう」って何？サウナデビューに最適な施設をご紹介。</p>
+                        <span class="cat-action">記事を読む</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Shop Preview -->
+            <section id="shop-preview" class="nav-section">
+                <h2>おすすめグッズ</h2>
+                <p style="text-align: center; margin-bottom: 30px;">「ととのい」をより快適にするオリジナルグッズ</p>
+                <div class="shop-grid" id="shop-preview-grid">
+                    <!-- JS will populate this -->
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="shop.html" class="btn btn-secondary">すべてのグッズを見る</a>
+                </div>
+            </section>
+            
+            <!-- Special Contents -->
+            <section id="special" class="nav-section">
+                <h2>Special Contents</h2>
+                <div class="special-grid">
+                    <div class="special-card">
+                        <h3>tokyosauna プロフィール</h3>
+                        <p>サウナと筋トレが大好きな都内28歳社会人。<br>整いペンギン「トトくん」と一緒に魅力発信中！</p>
+                        <a href="profile.html" class="btn btn-detail">詳細を見る</a>
+                    </div>
+                    <div class="special-card" style="background: linear-gradient(135deg, #e65100 0%, #f57c00 100%);">
+                        <h3>サウナ用語集</h3>
+                        <p>「ロウリュ」「アウフグース」「ととのう」...<br>知っておきたいサウナ用語を解説！</p>
+                        <a href="#" class="btn btn-tertiary">近日公開</a>
+                    </div>
+                </div>
+            </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3>プロフィール</h3>
+                        <div class="sidebar-profile">
+                            <img src="images/トップアイコン.webp" alt="tokyosauna">
+                            <p style="font-weight:bold; margin-bottom:5px;">tokyosauna</p>
+                            <p style="font-size:0.85rem; margin:0;">サウナと筋トレが大好きな都内28歳社会人。週末はととのい巡り！</p>
+                            <a href="profile.html" class="btn btn-detail" style="margin-top:10px; font-size:0.8rem;">詳細プロフィール</a>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h3>おすすめ記事</h3>
+                        <ul class="sidebar-link-list">
+                            <li><a href="ranking.html">👑 最新サウナランキングTOP10</a></li>
+                            <li><a href="ladies-sauna.html">🧖‍♀️ 都内レディースサウナ10選</a></li>
+                            <li><a href="work-sauna.html">💻 作業できるサウナ5選</a></li>
+                            <li><a href="beginner-sauna.html">🔰 初心者向けサウナ3選</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    </footer>
+    <script src="common.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Shop preview logic
+        const previewProducts = [
+            { name: 'オリジナルサウナハット', price: 3800, image: 'https://placehold.jp/300x300.png?text=Sauna%20Hat', description: '断熱性抜群のウール素材。' },
+            { name: 'サウナ専用MOKUタオル', price: 1200, image: 'https://placehold.jp/300x300.png?text=MOKU%20Towel', description: '速乾・軽量・コンパクト。' },
+            { name: '折りたたみサウナマット', price: 980, image: 'https://placehold.jp/300x300.png?text=Sauna%20Mat', description: 'マイマットで衛生的。' }
+        ];
+        const grid = document.getElementById('shop-preview-grid');
+        if (grid) {
+            previewProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <a href="shop.html" style="display: block; color: inherit; text-decoration: none;">
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <div class="card-content">
+                            <h3>${product.name}</h3>
+                            <p class="product-price">¥${product.price.toLocaleString()}</p>
+                            <p style="font-size: 0.9rem; color: #666; margin: 0;">${product.description}</p>
+                        </div>
+                    </a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    });
+    </script>
+</body>
+</html>
